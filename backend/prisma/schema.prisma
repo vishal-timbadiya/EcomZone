@@ -1,0 +1,12 @@
+// Prisma schema file - minimal schema for build compatibility
+// The actual Prisma client is pre-generated in src/lib/generated/prisma/
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+  output   = "../src/lib/generated/prisma"
+}
