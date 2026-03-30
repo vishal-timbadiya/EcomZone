@@ -6,9 +6,8 @@ const router = Router();
 router.get('/', async (req: Request, res: Response) => {
   try {
       const { slug  } = req.params;
-      const searchParams = req.nextUrl.searchParams;
-      const page = parseInt(searchParams.get('page') || '1');
-      const limit = parseInt(searchParams.get('limit') || '24');
+      const page = parseInt((req.query.page as string) || '1');
+      const limit = parseInt((req.query.limit as string) || '24');
   
       // Get category by slug
       const category = await prisma.category.findUnique({

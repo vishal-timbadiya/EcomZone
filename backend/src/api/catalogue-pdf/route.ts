@@ -2,6 +2,38 @@ import { prisma } from '@/lib/prisma';
 import { PDFDocument, rgb } from 'pdf-lib';
 import { Router, Request, Response } from 'express';
 
+// Pre-fetch all images before PDF generation
+async function getProductsWithImages(products: any[]) {
+  return Promise.all(
+    products.map(async (product) => {
+      let imageBuffer: Buffer | null = null;
+      if (product.imageUrl) {
+        try {
+          const controller = new AbortController();
+          const timeoutId = setTimeout(() => controller.abort(), 3000);
+          const response = await fetch(product.imageUrl, { signal: controller.signal });
+          clearTimeout(timeoutId);
+          if (response.ok) {
+            imageBuffer = Buffer.from(await response.arrayBuffer());
+          }
+        } catch (err) {
+          // Image fetch failed, continue without image
+        }
+      }
+      return { ...product, imageBuffer };
+    })
+  );
+}
+
+function getCatalogueName(type: string): string {
+  const names: { [key: string]: string } = {
+    'all-products': 'All Products Catalogue',
+    'new-arrivals': 'New Arrivals Catalogue',
+    'bestsellers': 'Bestsellers Catalogue',
+  };
+  return names[type] || 'Product Catalogue';
+}
+
 const router = Router();
 
 router.get('/', async (req: Request, res: Response) => {

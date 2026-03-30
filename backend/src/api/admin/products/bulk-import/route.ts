@@ -7,16 +7,6 @@ import path from 'path';
 
 const router = Router();
 
-// Extend Express Request type to include multer file
-declare global {
-  namespace Express {
-    interface Request {
-      file?: any;
-      files?: any[];
-    }
-  }
-}
-
 // Setup multer for file uploads - configure to handle both file and form fields
 const upload = multer({ 
   storage: multer.memoryStorage(),
@@ -24,7 +14,7 @@ const upload = multer({
 });
 
 // Multer error handler middleware
-const handleMulterError = (err: any, req: Request, res: Response, next: any) => {
+const handleMulterError = (err: any, req: Request, res: Response, next: any): any => {
   if (err instanceof multer.MulterError) {
     console.error('Multer error:', err.message);
     return res.status(400).json({ 
@@ -244,7 +234,8 @@ router.post('/', upload.single('file'), handleMulterError, async (req: Request, 
     };
     
     console.log('=== BULK IMPORT ROUTE SUCCESS ===');
-    return res.json(response);
+    res.json(response);
+    return;
 
   } catch (error: any) {
     console.error('=== BULK IMPORT ERROR ===');

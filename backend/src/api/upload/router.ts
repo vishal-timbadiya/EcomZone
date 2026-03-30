@@ -6,16 +6,6 @@ import { mkdir } from 'fs/promises';
 
 const router = Router();
 
-// Extend Express Request type to include multer file
-declare global {
-  namespace Express {
-    interface Request {
-      file?: any;
-      files?: any[];
-    }
-  }
-}
-
 const UPLOAD_DIR = path.join(process.cwd(), 'public', 'uploads');
 
 // Configure multer with disk storage for proper file handling
@@ -26,7 +16,7 @@ const storage = multer.diskStorage({
       await mkdir(UPLOAD_DIR, { recursive: true });
       cb(null, UPLOAD_DIR);
     } catch (err: any) {
-      cb(err);
+      cb(err, UPLOAD_DIR);
     }
   },
   filename: (req, file, cb) => {
