@@ -9,7 +9,6 @@
     "paths": {
       "@/*": ["./*"]
     },
-    "types": ["node"],
     "esModuleInterop": true,
     "allowSyntheticDefaultImports": true,
     "skipLibCheck": true,
