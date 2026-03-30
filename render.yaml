@@ -1,0 +1,22 @@
+services:
+  - type: web
+    name: ecomzone-backend
+    env: node
+    region: oregon
+    plan: starter
+    buildCommand: npm run build
+    startCommand: node dist/server.js
+    envVars:
+      - key: DATABASE_URL
+        value: postgresql://ecomzone_db_user:m3EEpuArcnq1nS0IzXC3dKnzqKUODpqv@dpg-d736u3p9fqoc73cf40vg-a/ecomzone_db_2fmp
+      - key: NODE_ENV
+        value: production
+      - key: JWT_SECRET
+        generateValue: true
+      - key: FRONTEND_URL
+        description: "Set to your Vercel frontend URL"
+      - key: PORT
+        value: "10000"
+    healthCheckPath: /health
+    healthCheckInterval: 300
+    maxShutdownDelay: 30
