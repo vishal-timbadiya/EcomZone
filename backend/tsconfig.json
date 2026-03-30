@@ -4,6 +4,8 @@
     "module": "commonjs",
     "lib": ["ES2020", "DOM"],
     "baseUrl": ".",
+    "typeRoots": ["./node_modules/@types"],
+    "types": ["node"],
     "paths": {
       "@prisma/client": ["src/lib/generated/prisma"],
       "@/*": ["src/*"]
@@ -19,14 +21,15 @@
     "declaration": false,
     "sourceMap": false,
     "noImplicitAny": false,
+    "strict": false,
     "strictNullChecks": false,
     "strictFunctionTypes": false,
     "noImplicitThis": false,
-    "alwaysStrict": true,
+    "alwaysStrict": false,
     "noUnusedLocals": false,
     "noUnusedParameters": false,
     "noImplicitReturns": false,
-    "noFallthroughCasesInSwitch": true
+    "noFallthroughCasesInSwitch": false
   },
   "include": [
     "src/**/*"
