@@ -14,8 +14,8 @@ router.post('/', async (req: Request, res: Response) => {
   
       let cartSubtotal = 0;
       let cartGST = 0;
-  
-      const detailedItems = [];
+
+      const detailedItems: any[] = [];
   
       for (const item of items) {
         const product = await prisma.product.findUnique({

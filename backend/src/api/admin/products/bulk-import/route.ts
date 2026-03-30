@@ -103,7 +103,7 @@ function validateProduct(product: any, rowIndex: number): { valid: boolean; data
             return JSON.parse(product.imageUrls);
           }
           // Otherwise, collect image1, image2, image3, etc. fields
-          const images = [];
+          const images: string[] = [];
           for (let i = 1; i <= 7; i++) {
             const imageField = `image${i}`;
             if (product[imageField] && product[imageField].trim()) {
@@ -114,7 +114,7 @@ function validateProduct(product: any, rowIndex: number): { valid: boolean; data
         } catch (e) {
           console.warn('Failed to parse imageUrls, collecting individual image fields');
           // Fallback to individual image fields
-          const images = [];
+          const images: string[] = [];
           for (let i = 1; i <= 7; i++) {
             const imageField = `image${i}`;
             if (product[imageField] && product[imageField].trim()) {

@@ -45,9 +45,9 @@ router.post('/', async (req: Request, res: Response) => {
   
       // Process products one by one instead of in a single transaction
       // to avoid transaction abort issues
-      const added = [];
-      const updated = [];
-      const errors = [];
+      const added: any[] = [];
+      const updated: any[] = [];
+      const errors: string[] = [];
   
       for (const productData of products) {
         try {

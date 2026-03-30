@@ -161,7 +161,7 @@ router.post('/', async (req: Request, res: Response) => {
     await prisma.product.deleteMany({});
     console.log('Cleared existing products');
 
-    const products = [];
+    const products: any[] = [];
 
     for (let i = 0; i < 100; i++) {
       const data = productData[i % productData.length];

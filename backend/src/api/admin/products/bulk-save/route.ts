@@ -15,9 +15,9 @@ router.post('/', async (req: Request, res: Response) => {
         return res.status(400).json({ error: 'Invalid products data' });
       }
   
-      const created = [];
-      const updated = [];
-      const errors = [];
+      const created: any[] = [];
+      const updated: any[] = [];
+      const errors: string[] = [];
       let successCount = 0;
       const batchCodes = new Set<string>(); // Track productCodes in this batch
   
