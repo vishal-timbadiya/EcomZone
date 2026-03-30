@@ -3,7 +3,6 @@
   "version": "1.0.0",
   "description": "EcomZone - E-commerce Platform Backend (Express)",
   "private": true,
-  "type": "module",
   "main": "dist/server.js",
   "scripts": {
     "dev": "ts-node src/server.ts",
