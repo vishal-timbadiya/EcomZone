@@ -4,8 +4,6 @@
     "module": "commonjs",
     "lib": ["ES2020", "DOM"],
     "baseUrl": ".",
-    "typeRoots": ["./node_modules/@types"],
-    "types": ["node"],
     "paths": {
       "@prisma/client": ["src/lib/generated/prisma"],
       "@/*": ["src/*"]
