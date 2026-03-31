@@ -1,5 +1,5 @@
 import { prisma } from '@/lib/prisma';
-import { PaymentStatus } from '@prisma/client';
+// PaymentStatus enum doesn't exist in the schema, using string literals instead
 import { Router, Request, Response } from 'express';
 
 const router = Router();
@@ -22,7 +22,7 @@ router.post('/', async (req: Request, res: Response) => {
         await prisma.order.update({
           where: { orderId: merchantTransactionId },
           data: {
-            paymentStatus: PaymentStatus.SUCCESS,
+            paymentStatus: "SUCCESS",
           },
         });
       }
@@ -31,7 +31,7 @@ router.post('/', async (req: Request, res: Response) => {
         await prisma.order.update({
           where: { orderId: merchantTransactionId },
           data: {
-            paymentStatus: PaymentStatus.FAILED,
+            paymentStatus: "FAILED",
           },
         });
       }

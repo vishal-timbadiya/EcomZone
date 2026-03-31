@@ -1,6 +1,6 @@
 import { prisma } from '@/lib/prisma';
 import { verifyAdmin } from '@/lib/adminAuth';
-import { OrderStatus, PaymentStatus } from '@prisma/client';
+// OrderStatus and PaymentStatus enums don't exist in the schema, using string literals instead
 import { Router, Request, Response } from 'express';
 
 const router = Router();
@@ -24,24 +24,11 @@ router.patch('/', async (req: Request, res: Response) => {
       const updateData: any = {};
       
       if (orderStatus) {
-        // Map string to Prisma enum - use type assertion
-        const statusMap: Record<string, any> = {
-          "CONFIRMED": OrderStatus.CONFIRMED,
-          "PACKED": "PACKED", // Will work after database is updated
-          "DISPATCHED": OrderStatus.DISPATCHED,
-          "DELIVERED": OrderStatus.DELIVERED,
-          "CANCELLED": OrderStatus.CANCELLED,
-        };
-        updateData.orderStatus = statusMap[orderStatus] || orderStatus;
+        updateData.orderStatus = orderStatus;
       }
       
       if (paymentStatus) {
-        const paymentMap: Record<string, any> = {
-          "PENDING": PaymentStatus.PENDING,
-          "SUCCESS": PaymentStatus.SUCCESS,
-          "FAILED": PaymentStatus.FAILED,
-        };
-        updateData.paymentStatus = paymentMap[paymentStatus] || paymentStatus;
+        updateData.paymentStatus = paymentStatus;
       }
       
       if (courierName !== undefined) {
