@@ -1,3 +1,4 @@
+/// <reference types="node" />
 import CryptoJS from "crypto-js";
 
 const ENCRYPTION_KEY = process.env.ENCRYPTION_KEY || "your-secret-key-change-in-production";
