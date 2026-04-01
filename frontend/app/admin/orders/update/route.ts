@@ -1,24 +1,36 @@
-import { prisma } from "@/lib/prisma";
 import { NextResponse } from "next/server";
 
 export async function POST(req: Request) {
-  const { orderId, orderStatus, courierName, trackingId } =
-    await req.json();
+  const { orderId, orderStatus, courierName, trackingId } = await req.json();
 
   try {
-    const updated = await prisma.order.update({
-      where: { orderId },
-      data: {
+    const apiUrl = process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000";
+    const response = await fetch(`${apiUrl}/admin/orders/bulk-update`, {
+      method: "PATCH",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: req.headers.get("Authorization") || "",
+      },
+      body: JSON.stringify({
+        orderIds: [orderId],
         orderStatus,
         courierName,
         trackingId,
-      },
+      }),
     });
 
-    return NextResponse.json(updated);
-  } catch {
+    if (!response.ok) {
+      return NextResponse.json(
+        { message: "Update failed" },
+        { status: response.status }
+      );
+    }
+
+    const data = await response.json();
+    return NextResponse.json(data);
+  } catch (error: any) {
     return NextResponse.json(
-      { message: "Update failed" },
+      { message: "Update failed: " + error.message },
       { status: 500 }
     );
   }
